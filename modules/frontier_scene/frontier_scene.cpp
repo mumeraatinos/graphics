@@ -46,9 +46,9 @@ bool gShowInstructions = true;
 bool gKeyDown[256] = {};
 bool gSpecialKeyDown[512] = {};
 
-const Color SKIN = {0.90f, 0.62f, 0.42f};
-const Color SKIN_LIGHT = {1.0f, 0.76f, 0.54f};
-const Color CHEEK = {0.92f, 0.18f, 0.42f};
+const Color SKIN = {0.78f, 0.40f, 0.16f};
+const Color SKIN_LIGHT = {0.96f, 0.58f, 0.28f};
+const Color CHEEK = {0.70f, 0.24f, 0.16f};
 const Color HAIR = {0.015f, 0.018f, 0.030f};
 const Color HAIR_HIGHLIGHT = {0.04f, 0.20f, 0.32f};
 const Color SUIT = {0.022f, 0.028f, 0.052f};
@@ -442,27 +442,57 @@ void drawClouds() {
     drawCloud(cloud3X, 8.8f, z3, cloud3Scale);
 }
 
-void drawMountain(float x, float z, float radius, float height, const Color& color) {
-    drawConeBetween(makeVec(x, 0.0f, z), makeVec(x - radius * 0.18f, height, z),
-                    radius, color, 28.0f, 0.34f);
-    drawConeBetween(makeVec(x + radius * 0.36f, 0.0f, z + 0.42f), makeVec(x + radius * 0.16f, height * 0.72f, z + 0.18f),
-                    radius * 0.55f, {0.12f, 0.40f, 0.58f}, 34.0f, 0.38f);
-    setEmissionMaterial({0.14f, 0.90f, 1.0f});
-    drawRawSphere(x - radius * 0.18f, height + 0.10f, z, radius * 0.10f, radius * 0.10f, radius * 0.10f, 18, 8);
+void drawBackgroundTower(float x, float z, float scale, float heightMultiplier,
+                         const Color& body, const Color& trim) {
+    float towerHeight = 3.8f * scale * heightMultiplier;
+    float towerWidth = 0.86f * scale;
+    drawCube(x, towerHeight * 0.50f, z, towerWidth, towerHeight, 0.78f * scale,
+             body, 54.0f, 0.32f);
+    drawCube(x + 0.26f * scale, towerHeight + 0.10f * scale, z + 0.02f * scale,
+             0.34f * scale, 0.20f * scale, 0.72f * scale, trim, 42.0f, 0.22f);
+
+    int rows = std::max(4, static_cast<int>(heightMultiplier * 6.0f));
+    for (int row = 0; row < rows; ++row) {
+        float y = (0.48f + static_cast<float>(row) * 0.46f) * scale;
+        if (y > towerHeight - 0.24f * scale) {
+            break;
+        }
+        Color light = row % 3 == 0 ? Color{0.95f, 0.78f, 0.20f} : Color{0.10f, 0.76f, 1.0f};
+        setEmissionMaterial(light);
+        drawRawSphere(x - 0.22f * scale, y, z + 0.42f * scale,
+                      0.050f * scale, 0.085f * scale, 0.018f * scale, 12, 6);
+        drawRawSphere(x + 0.02f * scale, y, z + 0.42f * scale,
+                      0.050f * scale, 0.085f * scale, 0.018f * scale, 12, 6);
+        drawRawSphere(x + 0.26f * scale, y, z + 0.42f * scale,
+                      0.050f * scale, 0.085f * scale, 0.018f * scale, 12, 6);
+    }
+
+    drawCylinderBetween(makeVec(x, towerHeight + 0.18f * scale, z),
+                        makeVec(x, towerHeight + 0.92f * scale, z),
+                        0.030f * scale, trim, 22.0f, 0.18f);
+    setEmissionMaterial({0.95f, 0.78f, 0.20f});
+    drawRawSphere(x, towerHeight + 1.02f * scale, z, 0.085f * scale, 0.085f * scale, 0.085f * scale, 16, 8);
 }
 
-void drawMountains() {
+void drawBackgroundSkyline() {
     const float frontZ = 4.0f;
     const float farZ = -38.0f;
     float z1 = loopDepth(-24.0f, gWorldTravel * 0.15f, 44.0f, frontZ);
     float z2 = loopDepth(-33.0f, gWorldTravel * 0.15f, 44.0f, frontZ);
     float z3 = loopDepth(-29.0f, gWorldTravel * 0.15f, 44.0f, frontZ);
+    float z4 = loopDepth(-20.5f, gWorldTravel * 0.15f, 44.0f, frontZ);
     float s1 = approachScale(1.0f, z1, farZ, frontZ, 0.58f);
     float s2 = approachScale(1.0f, z2, farZ, frontZ, 0.48f);
     float s3 = approachScale(1.0f, z3, farZ, frontZ, 0.52f);
-    drawMountain(sideLaneX(-8.2f, z1, farZ, frontZ, 7.2f), z1, 2.2f * s1, 6.8f * s1, {0.10f, 0.15f, 0.28f});
-    drawMountain(sideLaneX(-2.8f, z2, farZ, frontZ, 6.0f), z2, 1.9f * s2, 5.8f * s2, {0.14f, 0.20f, 0.34f});
-    drawMountain(sideLaneX(7.3f, z3, farZ, frontZ, 7.0f), z3, 2.0f * s3, 6.3f * s3, {0.09f, 0.16f, 0.32f});
+    float s4 = approachScale(1.0f, z4, farZ, frontZ, 0.54f);
+    drawBackgroundTower(sideLaneX(-8.2f, z1, farZ, frontZ, 7.2f), z1, 1.0f * s1, 1.40f,
+                        {0.030f, 0.040f, 0.088f}, {0.12f, 0.18f, 0.31f});
+    drawBackgroundTower(sideLaneX(-2.8f, z2, farZ, frontZ, 6.0f), z2, 0.92f * s2, 1.08f,
+                        {0.045f, 0.055f, 0.118f}, {0.16f, 0.22f, 0.34f});
+    drawBackgroundTower(sideLaneX(7.3f, z3, farZ, frontZ, 7.0f), z3, 0.96f * s3, 1.30f,
+                        {0.026f, 0.048f, 0.096f}, {0.10f, 0.20f, 0.36f});
+    drawBackgroundTower(sideLaneX(2.6f, z4, farZ, frontZ, 5.8f), z4, 0.78f * s4, 0.96f,
+                        {0.040f, 0.032f, 0.082f}, {0.22f, 0.16f, 0.30f});
 }
 
 void drawTree(float x, float z, float scale, bool roundTop) {
@@ -852,7 +882,7 @@ void display() {
     drawSky();
     drawSun();
     drawClouds();
-    drawMountains();
+    drawBackgroundSkyline();
     drawFarBuildings();
     drawFarTrees();
 
@@ -882,7 +912,7 @@ void reshape(int width, int height) {
     glLoadIdentity();
 
     // The near and far clipping planes are explicit here.
-    // The character sits close to the near plane; mountains, clouds, trees, and sun sit toward the far plane.
+    // The character sits close to the near plane; tall buildings, clouds, trees, and sun sit toward the far plane.
     gluPerspective(48.0, aspect, 1.0, 80.0);
 
     glMatrixMode(GL_MODELVIEW);

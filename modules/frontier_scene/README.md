@@ -8,28 +8,28 @@ This is a separate OpenGL/freeGLUT C++ project for Part B of the Computer Graphi
 
 ## Screenshot
 
-![Part B formal camera orbit output](part_b_camera_orbit_screenshot.png)
+![Part B formal camera orbit output](../../assets/Screenshot%202026-05-08%20145032.png)
 
 ## What It Shows
 
 - A large smooth 3D-style formal cartoon character in the foreground to represent the near plane.
-- Smaller mountains, trees, clouds, buildings, sun, ground, and path behind the character to represent the far plane.
+- Smaller tall buildings, trees, clouds, sun, ground, and path behind the character to represent the far plane.
 - Rounded connected body parts using OpenGL/GLUT 3D primitives: `glutSolidSphere`, `gluCylinder`, `gluCylinder` cones, `glutSolidCube`, and `glutSolidTorus`.
 - Perspective depth using `gluPerspective()` and `gluLookAt()`.
 - 3D rendering settings: `GL_DEPTH_TEST`, `GL_LIGHTING`, `GL_LIGHT0`, `GL_SMOOTH`, materials, and normalized scaled shapes.
-- Character details: formal suit jacket, white shirt, tie, glasses, polished shoes, wristwatch, document portfolio, smooth hinge joints, bent walking stance, hair, facial expression, and shadow.
+- Character details: brown skin tone, formal suit jacket, white shirt, tie, glasses, polished shoes, wristwatch, document portfolio, smooth hinge joints, bent walking stance, hair, facial expression, and shadow.
 - Keyboard control: pressing movement keys moves the camera instead of moving the character.
 - Orbit keys circle the camera around the formal character in 3D.
 - The character remains centered and stationary as the near-plane object while the viewer moves around it.
 - The default view starts from a slight side angle, with a one-time on-screen arrow-key instruction.
-- Far-plane houses, trees, mountains, clouds, and sun stay behind the character to support the near/far depth view.
+- Far-plane tall buildings, trees, clouds, and sun stay behind the character to support the near/far depth view.
 - Facial animation: blinking eyes and a subtle animated smile.
 - Larger neon cloud clusters without watermark text.
 
 ## Files
 
 - `frontier_scene.cpp`: main C++ OpenGL source file.
-- `part_b_camera_orbit_screenshot.png`: captured screenshot of the final formal character camera-orbit scene.
+- `../../assets/Screenshot 2026-05-08 145032.png`: captured screenshot of the final formal character camera-orbit scene.
 - `part_b_cartoon_character_camera_instructions.exe`: compiled formal-character interactive 3D camera program with one-time instructions.
 
 ## Build
