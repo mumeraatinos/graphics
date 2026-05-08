@@ -6,7 +6,11 @@ This project renders a reference sheet of common OpenGL primitive shapes using G
 
 ![OpenGL primitive examples](assets/primitive_cat.png)
 
-## What It Shows
+## Part B Cartoon Scene
+
+The second assignment part is in `modules/frontier_scene`. It contains the redesigned formal 3D cartoon character scene for the near/far plane requirement, with the current source in `frontier_scene.cpp` and final screenshot in `part_b_camera_orbit_screenshot.png`.
+
+## Part 1 What It Shows
 
 - `GL_POINTS`
 - `GL_LINES`
