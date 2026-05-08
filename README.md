@@ -39,18 +39,7 @@ Part C contains the front and back business card designs.
 
 Part E recreates the same Part A primitive sheet using the `graphics.h` / WinBGIm library in C/C++. The recreated page uses BGI drawing calls such as `line`, `fillellipse`, and `outtextxy` while matching the Part A layout and labels.
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="modules/retro_bitmap/part_e_all_primitives.png" alt="Part E graphics.h recreation of Part A primitives" width="520"><br>
-      <sub>Part A primitive sheet recreated with graphics.h</sub>
-    </td>
-    <td align="center">
-      <img src="modules/retro_bitmap/part_e_graphics_h_output.png" alt="Part E graphics.h overview drawings" width="520"><br>
-      <sub>Additional graphics.h drawing set</sub>
-    </td>
-  </tr>
-</table>
+<img src="modules/retro_bitmap/part_e_all_primitives.png" alt="Part E graphics.h recreation of Part A primitives" width="780">
 
 Source: `modules/retro_bitmap/part_e_graphics_h.cpp`
 

@@ -1,6 +1,6 @@
 # Part E - graphics.h Image Creation
 
-This folder contains a separate C/C++ `graphics.h` submission for Part E. The program opens first on a `graphics.h` recreation of the Part A OpenGL lines-and-shapes reference sheet, then the small top-right `More` button opens the other Part E drawings.
+This folder contains a separate C/C++ `graphics.h` submission for Part E. The program opens directly on a `graphics.h` recreation of the Part A OpenGL lines-and-shapes reference sheet.
 
 ## Hosted Output Page
 
@@ -8,35 +8,27 @@ This folder contains a separate C/C++ `graphics.h` submission for Part E. The pr
 
 ## Screenshots
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="part_e_graphics_h_output.png" alt="Part E overview output" width="360"><br>
-      <sub>Overview page containing the completed graphics.h drawing set.</sub>
-    </td>
-    <td align="center">
-      <img src="part_e_all_primitives.png" alt="Part E recreated primitive page" width="360"><br>
-      <sub>Part A primitive sheet recreated with graphics.h drawing calls.</sub>
-    </td>
-  </tr>
-</table>
+<img src="part_e_all_primitives.png" alt="Part E recreated primitive page" width="780">
 
 ## What It Shows
 
-The program draws four complete 2D images in one window using classic BGI/WinBGIm drawing functions:
+The program redraws the Part A primitive reference sheet using classic BGI/WinBGIm drawing functions:
 
-- Landscape image with sun, clouds, mountains, river, trees, and birds.
-- City road image with buildings, windows, road perspective, traffic lights, and a car.
-- Cartoon student image with school background, character, book, and student ID.
-- Primitive demonstration image showing `line()`, `rectangle()`, `bar()`, `circle()`, `ellipse()`, `arc()`, `pieslice()`, and `fillpoly()`.
-- Part A lines-and-shapes recreation page showing the same `GL_POINTS`, `GL_LINES`, `GL_LINE_STRIP`, `GL_LINE_LOOP`, `GL_TRIANGLES`, `GL_TRIANGLE_STRIP`, `GL_TRIANGLE_FAN`, `GL_QUADS`, `GL_QUAD_STRIP`, and `GL_POLYGON` layout, redrawn using `graphics.h`.
+- `GL_POINTS`
+- `GL_LINES`
+- `GL_LINE_STRIP`
+- `GL_LINE_LOOP`
+- `GL_TRIANGLES`
+- `GL_TRIANGLE_STRIP`
+- `GL_TRIANGLE_FAN`
+- `GL_QUADS`
+- Larger `GL_QUAD_STRIP`
+- `GL_POLYGON`
 
 ## Files
 
 - `part_e_graphics_h.cpp`: main C++ source file using `#include <graphics.h>`.
-- `part_e_graphics_h_output.bmp`: saved output image produced by the program.
 - `part_e_all_primitives.bmp`: saved `graphics.h` recreation of the Part A primitive sheet.
-- `part_e_graphics_h_output.png`: web-friendly PNG version of the main output image.
 - `part_e_all_primitives.png`: web-friendly PNG version of the recreated primitive page.
 - `README.md`: build, run, and marking notes for Part E.
 
@@ -77,29 +69,13 @@ To generate the output BMP automatically and close the program:
 .\part_e_graphics_h.exe --save-and-exit
 ```
 
-That command saves both `part_e_graphics_h_output.bmp` and `part_e_all_primitives.bmp`.
-
-To open directly on the four-image overview page:
-
-```powershell
-.\part_e_graphics_h.exe --show-overview
-```
-
-To generate only the recreated primitive page and close:
-
-```powershell
-.\part_e_graphics_h.exe --save-reference-and-exit
-```
+That command saves `part_e_all_primitives.bmp`.
 
 ## Controls
 
-- Click the top-right `More` button: open the four-image overview page.
-- Click the top-right `All` button: return to the recreated Part A primitive reference page.
-- `A`: open the recreated Part A primitive reference page.
-- `M` or `O`: open the four-image overview page.
-- `S`: save the current page as either `part_e_graphics_h_output.bmp` or `part_e_all_primitives.bmp`.
+- `S`: save the current page as `part_e_all_primitives.bmp`.
 - `Q` or `Esc`: close the program.
 
 ## Marking Notes
 
-The work is kept separate from the OpenGL parts and uses `graphics.h` drawing calls only. It demonstrates filled shapes, outlines, arcs, text labels, polygon filling, color changes, a finished multi-image layout, and a direct BGI recreation of the Part A primitive reference sheet.
+The work is kept separate from the OpenGL parts and uses `graphics.h` drawing calls only. It demonstrates points, lines, connected line strips, closed loops, triangle structures, quad structures, text labels, and a direct BGI recreation of the Part A primitive reference sheet.

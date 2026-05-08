@@ -8,15 +8,8 @@
 
 const int WINDOW_WIDTH = 1180;
 const int WINDOW_HEIGHT = 820;
-const char* OVERVIEW_OUTPUT_IMAGE = "part_e_graphics_h_output.bmp";
 const char* REFERENCE_OUTPUT_IMAGE = "part_e_all_primitives.bmp";
 const int FOOTER_TOP = WINDOW_HEIGHT - 38;
-const int NAV_BUTTON_WIDTH = 104;
-const int NAV_BUTTON_HEIGHT = 32;
-const int NAV_BUTTON_LEFT = WINDOW_WIDTH - NAV_BUTTON_WIDTH - 14;
-const int NAV_BUTTON_TOP = 12;
-const int NAV_BUTTON_RIGHT = NAV_BUTTON_LEFT + NAV_BUTTON_WIDTH;
-const int NAV_BUTTON_BOTTOM = NAV_BUTTON_TOP + NAV_BUTTON_HEIGHT;
 
 void drawText(int x, int y, const char* text) {
     outtextxy(x, y, const_cast<char*>(text));
@@ -127,27 +120,6 @@ void drawReferencePoint(int x, int y, const char* label, int labelX, int labelY)
     setfillstyle(SOLID_FILL, BLACK);
     fillellipse(x, y, 5, 5);
     drawReferenceLabel(labelX, labelY, label);
-}
-
-void drawNavButton(const char* label, int textBackgroundColor) {
-    setcolor(BLACK);
-    rectangle(NAV_BUTTON_LEFT, NAV_BUTTON_TOP, NAV_BUTTON_RIGHT, NAV_BUTTON_BOTTOM);
-    line(NAV_BUTTON_LEFT + 2, NAV_BUTTON_BOTTOM + 1, NAV_BUTTON_RIGHT + 1, NAV_BUTTON_BOTTOM + 1);
-    line(NAV_BUTTON_RIGHT + 1, NAV_BUTTON_TOP + 2, NAV_BUTTON_RIGHT + 1, NAV_BUTTON_BOTTOM + 1);
-
-    settextstyle(DEFAULT_FONT, HORIZ_DIR, 2);
-    setbkcolor(textBackgroundColor);
-    int labelWidth = textwidth(const_cast<char*>(label));
-    int labelHeight = textheight(const_cast<char*>(label));
-    drawText(NAV_BUTTON_LEFT + (NAV_BUTTON_WIDTH - labelWidth) / 2,
-             NAV_BUTTON_TOP + (NAV_BUTTON_HEIGHT - labelHeight) / 2,
-             label);
-    settextstyle(DEFAULT_FONT, HORIZ_DIR, 1);
-}
-
-bool isInsideNavButton(int x, int y) {
-    return x >= NAV_BUTTON_LEFT && x <= NAV_BUTTON_RIGHT &&
-           y >= NAV_BUTTON_TOP && y <= NAV_BUTTON_BOTTOM;
 }
 
 void drawCloud(int x, int y, int scale) {
@@ -539,8 +511,8 @@ void drawPartAPrimitiveReference() {
     drawReferenceWorldText(12.0f, -5.6f, "GL_QUADS", true);
 
     const ReferencePoint quadStripExample[] = {
-        {48.5f, 5.2f}, {48.0f, 10.0f}, {53.0f, 5.2f}, {53.0f, 10.5f},
-        {57.1f, 6.0f}, {55.6f, 11.2f}, {61.6f, 6.6f}, {60.9f, 11.9f}
+        {47.5f, 1.5f}, {46.8f, 8.5f}, {53.4f, 1.5f}, {53.4f, 9.1f},
+        {58.2f, 2.6f}, {56.5f, 10.0f}, {63.4f, 3.3f}, {62.5f, 10.9f}
     };
     const ReferenceLabelOffset quadStripLabels[] = {
         {-1.3f, -0.5f}, {-1.3f, 0.2f}, {-0.2f, -0.8f}, {-0.2f, 0.3f},
@@ -588,11 +560,10 @@ void drawReferenceFooter(bool saved) {
     rectangle(0, FOOTER_TOP, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1);
 
     if (saved) {
-        drawCenteredText(0, WINDOW_WIDTH, WINDOW_HEIGHT - 25, "Saved part_e_all_primitives.bmp. Click More for the other drawings, S saves again, Q/Esc closes.");
+        drawCenteredText(0, WINDOW_WIDTH, WINDOW_HEIGHT - 25, "Saved part_e_all_primitives.bmp. S saves again, Q/Esc closes.");
     } else {
-        drawCenteredText(0, WINDOW_WIDTH, WINDOW_HEIGHT - 25, "Part A primitive sheet recreated using graphics.h. Click More for the other drawings, S saves, Q/Esc closes.");
+        drawCenteredText(0, WINDOW_WIDTH, WINDOW_HEIGHT - 25, "Part A primitive sheet recreated using graphics.h. S saves, Q/Esc closes.");
     }
-    drawNavButton("More", WHITE);
 }
 
 void drawAllPrimitiveReference(bool saved = false) {
@@ -609,80 +580,10 @@ void drawAllPrimitiveReference(bool saved = false) {
     drawReferenceFooter(saved);
 }
 
-void drawHeader() {
-    setfillstyle(SOLID_FILL, LIGHTBLUE);
-    bar(0, 0, WINDOW_WIDTH, 56);
-    setcolor(BLACK);
-    rectangle(0, 0, WINDOW_WIDTH - 1, 56);
-
-    settextstyle(DEFAULT_FONT, HORIZ_DIR, 2);
-    drawCenteredText(0, WINDOW_WIDTH, 10, "PART E - IMAGE CREATION USING graphics.h");
-
-    settextstyle(DEFAULT_FONT, HORIZ_DIR, 1);
-    drawCenteredText(0, WINDOW_WIDTH, 38, "C/C++ BGI graphics primitives: line, rectangle, circle, ellipse, arc, pieslice, bar, fillpoly and text");
-}
-
-void drawFooter(bool saved) {
-    setfillstyle(SOLID_FILL, LIGHTGRAY);
-    bar(0, FOOTER_TOP, WINDOW_WIDTH, WINDOW_HEIGHT);
-    setcolor(BLACK);
-    rectangle(0, FOOTER_TOP, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1);
-
-    if (saved) {
-        drawCenteredText(0, WINDOW_WIDTH, WINDOW_HEIGHT - 25, "Saved part_e_graphics_h_output.bmp. Click All to return, S saves again, Q/Esc closes.");
-    } else {
-        drawCenteredText(0, WINDOW_WIDTH, WINDOW_HEIGHT - 25, "Other Part E drawings. Click All to return, S saves this page, Q/Esc closes. Student ID: M230913");
-    }
-    drawNavButton("All", LIGHTBLUE);
-}
-
-void drawOverview(bool saved = false) {
-    setbkcolor(WHITE);
-    cleardevice();
-    setlinestyle(SOLID_LINE, 0, NORM_WIDTH);
-    drawHeader();
-
-    const int margin = 22;
-    const int gap = 18;
-    const int panelW = (WINDOW_WIDTH - margin * 2 - gap) / 2;
-    const int panelH = 300;
-    const int row1 = 72;
-    const int row2 = row1 + panelH + gap;
-
-    drawLandscapeImage(margin, row1, panelW, panelH);
-    drawCityImage(margin + panelW + gap, row1, panelW, panelH);
-    drawStudentImage(margin, row2, panelW, panelH);
-    drawPrimitiveImage(margin + panelW + gap, row2, panelW, panelH);
-
-    drawFooter(saved);
-}
-
-void saveOverviewImage() {
-    drawOverview(false);
-    writeimagefile(const_cast<char*>(OVERVIEW_OUTPUT_IMAGE), 0, 0, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1);
-    drawOverview(true);
-}
-
 void saveReferenceImage() {
     drawAllPrimitiveReference(false);
     writeimagefile(const_cast<char*>(REFERENCE_OUTPUT_IMAGE), 0, 0, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1);
     drawAllPrimitiveReference(true);
-}
-
-void drawCurrentPage(bool referencePage, bool saved = false) {
-    if (referencePage) {
-        drawAllPrimitiveReference(saved);
-    } else {
-        drawOverview(saved);
-    }
-}
-
-void saveCurrentPage(bool referencePage) {
-    if (referencePage) {
-        saveReferenceImage();
-    } else {
-        saveOverviewImage();
-    }
 }
 
 bool hasOption(int argc, char* argv[], const char* option) {
@@ -698,7 +599,6 @@ int main(int argc, char* argv[]) {
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Part E - graphics.h Image Creation");
 
     if (hasOption(argc, argv, "--save-and-exit")) {
-        saveOverviewImage();
         saveReferenceImage();
         delay(250);
         closegraph();
@@ -712,8 +612,7 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    bool referencePage = !hasOption(argc, argv, "--show-overview");
-    drawCurrentPage(referencePage, false);
+    drawAllPrimitiveReference(false);
 
     bool running = true;
     while (running) {
@@ -722,23 +621,7 @@ int main(int argc, char* argv[]) {
             if (key == 27 || key == 'q' || key == 'Q') {
                 running = false;
             } else if (key == 's' || key == 'S') {
-                saveCurrentPage(referencePage);
-            } else if (key == 'a' || key == 'A') {
-                referencePage = true;
-                drawCurrentPage(referencePage, false);
-            } else if (key == 'm' || key == 'M' || key == 'o' || key == 'O') {
-                referencePage = false;
-                drawCurrentPage(referencePage, false);
-            }
-        }
-
-        if (ismouseclick(WM_LBUTTONDOWN)) {
-            int mouseX = 0;
-            int mouseY = 0;
-            getmouseclick(WM_LBUTTONDOWN, mouseX, mouseY);
-            if (isInsideNavButton(mouseX, mouseY)) {
-                referencePage = !referencePage;
-                drawCurrentPage(referencePage, false);
+                saveReferenceImage();
             }
         }
         delay(20);
